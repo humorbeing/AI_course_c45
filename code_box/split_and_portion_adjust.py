@@ -5,8 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import average_precision_score
-import numpy as np
+
 
 file_location = "/media/ray/D43E51303E510CBC/MyStuff/Workspace/Python/AI_course_c45/dataset/breast_cancer_dataset.txt"
 
@@ -220,38 +219,22 @@ clf = tree.DecisionTreeClassifier()
 clf = clf.fit(X_train, Y_train)
 
 predict_y = clf.predict(X_test)
-y_score = clf.predict_proba(X_test)
-y_score =np.array(y_score)
-y_score = y_score.T
-y_score = y_score[1]
-y_test = Y_test.tolist()
-print(y_score.shape)
-print(y_score)
-print(y_test)
-# print(y_test.shape)
+prob_y = clf.predict_proba(X_test)
+
 
 # print(predict_y)
 # print(Y_test)
 
-average_precision = average_precision_score(y_test, y_score)
-print(average_precision)
 
 
-y_score = clf.predict_proba(X_train)
-y_score =np.array(y_score)
-y_score = y_score.T
-y_score = y_score[1]
-y_test = Y_train.tolist()
-
-average_precision = average_precision_score(y_test, y_score)
-print(average_precision)
 
 
-y_score = clf.predict(X_train)
-print(y_score)
-print(y_test)
-from sklearn.metrics import accuracy_score
-print(accuracy_score(y_test, y_score))
+
+
+
+
+
+
 
 
 

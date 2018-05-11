@@ -4,9 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn import preprocessing
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import average_precision_score
-import numpy as np
 
 file_location = "/media/ray/D43E51303E510CBC/MyStuff/Workspace/Python/AI_course_c45/dataset/breast_cancer_dataset.txt"
 
@@ -98,7 +95,7 @@ inv_nodes_mapping = [
 df = label_encoding(df, 'inv_nodes', inv_nodes_mapping)
 del inv_nodes_mapping
 
-# print(df.head())
+print(df.head())
 # binary encode
 
 class_mapping = [
@@ -113,7 +110,7 @@ node_caps_mapping = [
     'yes',
     'no'
 ]
-# print(df.head())
+print(df.head())
 df['node_caps'] = df['node_caps'].replace('?','no')
 df = label_encoding(df, 'node_caps', node_caps_mapping)
 del node_caps_mapping
@@ -135,8 +132,8 @@ df = label_encoding(df, 'irradiat', irradiat_mapping)
 del irradiat_mapping
 
 
-# print(df.head())
-# print(df.dtypes)
+print(df.head())
+print(df.dtypes)
 
 # print(df[df['node_caps'] =='?']['node_caps'].describe())
 # print(df['node_caps'].describe())
@@ -155,112 +152,8 @@ def one_hot_encoding(dataframe, column_name):
 df = one_hot_encoding(df, 'breast_quad')
 df = one_hot_encoding(df, 'menopause')
 
-# print(df.head())
-print()
-print('From To:')
-print()
+print(df.head())
 print(df.dtypes)
 
 X = df.drop(['class'], axis=1)
 Y = df['class']
-
-
-X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y, test_size=0.5, random_state=3
-)
-
-def split_status(in_train, in_test):
-    temp = in_train.tolist()
-    num_pos_train = 0
-    num_all_train = 0
-    for i in temp:
-        if i == 1:
-            num_pos_train += 1
-        num_all_train += 1
-
-    temp = in_test.tolist()
-    num_pos_test = 0
-    num_all_test = 0
-    for i in temp:
-        if i == 1:
-            num_pos_test += 1
-        num_all_test += 1
-
-    print(
-        'There are {} pos examples in {} TRAIN-set. Ratio: {}%'.format(
-            num_pos_train, num_all_train, (round(num_pos_train/num_all_train,2))
-        )
-    )
-    print(
-        'There are {} pos examples in {} TEST-set. Ratio: {}%'.format(
-            num_pos_test, num_all_test, (round(num_pos_test / num_all_test, 2))
-        )
-    )
-    print(
-        'Split Ratio:                  Train/ALL {}%, Test/ALL {}%, Train/Test {}.'.format(
-            round((num_all_train/(num_all_test+num_all_train)),2),
-            round((num_all_test/(num_all_test+num_all_train)),2),
-            round((num_all_train/num_all_test),2)
-        )
-    )
-    print(
-        'Positive Example Split Ratio: Train/ALL {}%, Test/ALL {}%, Train/Test {}.'.format(
-            round((num_pos_train / (num_pos_test + num_pos_train)),2),
-            round((num_pos_test / (num_pos_test + num_pos_train)),2),
-            round((num_pos_train / num_pos_test),2)
-        )
-    )
-    # print('Number of trainset:', num_all_train)
-
-split_status(Y_train, Y_test)
-# print(Y_train['class'].describe())
-
-
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(X_train, Y_train)
-
-predict_y = clf.predict(X_test)
-y_score = clf.predict_proba(X_test)
-y_score =np.array(y_score)
-y_score = y_score.T
-y_score = y_score[1]
-y_test = Y_test.tolist()
-print(y_score.shape)
-print(y_score)
-print(y_test)
-# print(y_test.shape)
-
-# print(predict_y)
-# print(Y_test)
-
-average_precision = average_precision_score(y_test, y_score)
-print(average_precision)
-
-
-y_score = clf.predict_proba(X_train)
-y_score =np.array(y_score)
-y_score = y_score.T
-y_score = y_score[1]
-y_test = Y_train.tolist()
-
-average_precision = average_precision_score(y_test, y_score)
-print(average_precision)
-
-
-y_score = clf.predict(X_train)
-print(y_score)
-print(y_test)
-from sklearn.metrics import accuracy_score
-print(accuracy_score(y_test, y_score))
-
-
-
-
-
-
-
-
-
-
-
-
