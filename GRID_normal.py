@@ -25,25 +25,22 @@ ps_record = []
 rs_record = []
 f1_record = []
 ac_record = []
-for epoch in range(1):
+for epoch in range(500):
     tree_para = {
-        'criterion': ['gini', 'entropy'],
-        'splitter': ['best', 'random'],
+        # 'criterion': ['gini', 'entropy'],
+        # 'splitter': ['best', 'random'],
         'max_depth': range(1, 30),
-        'min_samples_split': [2, 3, 4, 0.3, 0.5, 0.7],
-        'min_samples_leaf': [1, 2, 3, 0.3, 0.4, 0.5],
-        'min_weight_fraction_leaf': [0.1, 0.2, 0.3, 0.4],
-        'max_features': [2, 3, 4, 0.5, 0.9, 1],
-        'max_leaf_nodes': [2, 3, 4, 5],
+        # 'min_samples_split': [2, 3, 4, 0.3, 0.5, 0.7],
+        # 'min_samples_leaf': [1, 2, 3, 0.3, 0.4, 0.5]
     }
 
-    clf = GridSearchCV(
-        tree.DecisionTreeClassifier(),
-        tree_para,
-        cv=4,
-        # scoring=make_scorer(roc_auc_score)
-    )
-    # clf = tree.DecisionTreeClassifier()
+    # clf = GridSearchCV(
+    #     tree.DecisionTreeClassifier(),
+    #     tree_para,
+    #     cv=4,
+    #     # scoring=make_scorer(roc_auc_score)
+    # )
+    clf = tree.DecisionTreeClassifier()
     clf = clf.fit(X_train, Y_train)
 
     y_test_predict = clf.predict(X_test)
@@ -78,3 +75,18 @@ print('ps max:', np.max(ps_record))
 print('rs max:', np.max(rs_record))
 print('f1 max:', np.max(f1_record))
 print('ac max:', np.max(ac_record))
+
+'''mean rac: 0.5262013729977116 rac min: 0.5097254004576659
+rac max: 0.5491990846681922
+ps max: 0.38461538461538464
+rs max: 0.3157894736842105
+f1 max: 0.34285714285714286
+ac max: 0.6615384615384615'''
+
+
+'''mean rac: 0.6893592677345538 rac min: 0.6893592677345538
+rac max: 0.6893592677345538
+ps max: 1.0
+rs max: 0.15789473684210525
+f1 max: 0.2727272727272727
+ac max: 0.7538461538461538'''

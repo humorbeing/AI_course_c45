@@ -15,8 +15,6 @@ from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics import make_scorer
-
 
 X_train, X_test, Y_train, Y_test = me.get_split(0.224)
 
@@ -25,25 +23,8 @@ ps_record = []
 rs_record = []
 f1_record = []
 ac_record = []
-for epoch in range(1):
-    tree_para = {
-        'criterion': ['gini', 'entropy'],
-        'splitter': ['best', 'random'],
-        'max_depth': range(1, 30),
-        'min_samples_split': [2, 3, 4, 0.3, 0.5, 0.7],
-        'min_samples_leaf': [1, 2, 3, 0.3, 0.4, 0.5],
-        'min_weight_fraction_leaf': [0.1, 0.2, 0.3, 0.4],
-        'max_features': [2, 3, 4, 0.5, 0.9, 1],
-        'max_leaf_nodes': [2, 3, 4, 5],
-    }
-
-    clf = GridSearchCV(
-        tree.DecisionTreeClassifier(),
-        tree_para,
-        cv=4,
-        # scoring=make_scorer(roc_auc_score)
-    )
-    # clf = tree.DecisionTreeClassifier()
+for model in range(200):
+    clf = tree.DecisionTreeClassifier()
     clf = clf.fit(X_train, Y_train)
 
     y_test_predict = clf.predict(X_test)
@@ -55,11 +36,14 @@ for epoch in range(1):
     y_test_proba = y_test_proba.T
     y_test_proba = y_test_proba[1]
 
+
     rac = roc_auc_score(y_test, y_test_proba)
     rac_record.append(rac)
 
+
     ps = precision_score(y_test, y_test_predict)
     ps_record.append(ps)
+
 
     rs = recall_score(y_test, y_test_predict)
     rs_record.append(rs)
@@ -70,11 +54,14 @@ for epoch in range(1):
     accuracy = accuracy_score(y_test, y_test_predict)
     ac_record.append(accuracy)
 
-    # print('rac:', rac)
+rac_mean = np.mean(rac_record)
+ps_mean = np.mean(ps_record)
+rs_mean = np.mean(rs_record)
+f1_mean = np.mean(f1_record)
+ac_mean = np.mean(ac_record)
 
-print('mean rac:', np.mean(rac_record), 'rac min:', np.min(rac_record))
-print('rac max:', np.max(rac_record))
-print('ps max:', np.max(ps_record))
-print('rs max:', np.max(rs_record))
-print('f1 max:', np.max(f1_record))
-print('ac max:', np.max(ac_record))
+print('rac:', rac_mean)
+print('ps:', ps_mean)
+print('rs:', rs_mean)
+print('f1:', f1_mean)
+print('ac:', ac_mean)

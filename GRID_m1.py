@@ -25,16 +25,13 @@ ps_record = []
 rs_record = []
 f1_record = []
 ac_record = []
-for epoch in range(1):
+for epoch in range(50):
     tree_para = {
-        'criterion': ['gini', 'entropy'],
-        'splitter': ['best', 'random'],
+        # 'criterion': ['gini', 'entropy'],
+        # 'splitter': ['best', 'random'],
         'max_depth': range(1, 30),
-        'min_samples_split': [2, 3, 4, 0.3, 0.5, 0.7],
-        'min_samples_leaf': [1, 2, 3, 0.3, 0.4, 0.5],
-        'min_weight_fraction_leaf': [0.1, 0.2, 0.3, 0.4],
-        'max_features': [2, 3, 4, 0.5, 0.9, 1],
-        'max_leaf_nodes': [2, 3, 4, 5],
+        # 'min_samples_split': [2, 3, 4, 0.3, 0.5, 0.7],
+        # 'min_samples_leaf': [1, 2, 3, 0.3, 0.4, 0.5]
     }
 
     clf = GridSearchCV(
@@ -78,3 +75,11 @@ print('ps max:', np.max(ps_record))
 print('rs max:', np.max(rs_record))
 print('f1 max:', np.max(f1_record))
 print('ac max:', np.max(ac_record))
+
+
+'''mean rac: 0.6080663615560641 rac min: 0.5274599542334095
+rac max: 0.6939359267734553
+ps max: 1.0
+rs max: 0.42105263157894735
+f1 max: 0.45714285714285713
+ac max: 0.7538461538461538'''

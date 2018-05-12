@@ -29,12 +29,12 @@ for epoch in range(1):
     tree_para = {
         'criterion': ['gini', 'entropy'],
         'splitter': ['best', 'random'],
-        'max_depth': range(1, 30),
-        'min_samples_split': [2, 3, 4, 0.3, 0.5, 0.7],
-        'min_samples_leaf': [1, 2, 3, 0.3, 0.4, 0.5],
-        'min_weight_fraction_leaf': [0.1, 0.2, 0.3, 0.4],
-        'max_features': [2, 3, 4, 0.5, 0.9, 1],
-        'max_leaf_nodes': [2, 3, 4, 5],
+        'max_depth': range(5, 15),
+        'min_samples_split': [2, 3, 0.3, 0.5],
+        'min_samples_leaf': [1, 2, 3, 0.3, 0.4],
+        'min_weight_fraction_leaf': [0.1, 0.2, 0.3],
+        'max_features': [2, 3, 4, 0.5, 0.9],
+        'max_leaf_nodes': [2, 3, 4],
     }
 
     clf = GridSearchCV(

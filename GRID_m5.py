@@ -78,3 +78,11 @@ print('ps max:', np.max(ps_record))
 print('rs max:', np.max(rs_record))
 print('f1 max:', np.max(f1_record))
 print('ac max:', np.max(ac_record))
+
+'''
+mean rac: 0.6807780320366132 rac min: 0.6807780320366132
+rac max: 0.6807780320366132
+ps max: 0.75
+rs max: 0.3157894736842105
+f1 max: 0.44444444444444436
+ac max: 0.7692307692307693'''
